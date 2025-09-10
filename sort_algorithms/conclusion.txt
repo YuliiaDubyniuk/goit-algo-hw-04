@@ -1,0 +1,9 @@
+Insertion sort works fine on small data, but becomes extremely slow as data grows (O(n²) time complexity). 
+At 100k elements, it is practically unusable.
+
+Merge sort much faster than insertion sort on medium/large inputs thanks to O(n log n) complexity, 
+but still slower than Python's built-in sort.
+
+Timsort (Python's built-in sort) is clearly the fastest across all sizes. 
+It's combination of merge sort and insertion sort makes it well optimized for real-world data patterns 
+and, in most cases, the best choice for developers.
