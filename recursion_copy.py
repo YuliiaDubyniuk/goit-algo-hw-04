@@ -20,7 +20,8 @@ def recursive_copy(source: Path, output: Path):
             if el.is_dir():
                 recursive_copy(el, output)
             else:
-                subdir = output/el.suffix[1:]
+                ext = el.suffix[1:] if el.suffix else "no_ext"
+                subdir = output/ext
                 subdir.mkdir(exist_ok=True, parents=True)
                 safe_copy(el, subdir)
         except Exception as e:
