@@ -22,15 +22,21 @@ def recursive_copy(source: Path, output: Path):
             else:
                 subdir = output/el.suffix[1:]
                 subdir.mkdir(exist_ok=True, parents=True)
-                shutil.copy(el, subdir)
+                safe_copy(el, subdir)
         except Exception as e:
             print(f"An error occurred: {e}")
 
 
-def main():
-    args = parse_argv()
-    recursive_copy(args.source, args.output)
+def safe_copy(src: Path, dst: Path):
+    """add counter value to the new file copy name if file with the same name exists"""
+    copy_name = dst / src.name
+    counter = 1
+    while copy_name.exists():
+        copy_name = dst / f"{src.stem}_{counter}{src.suffix}"
+        counter += 1
+    shutil.copy(src, copy_name)
 
 
 if __name__ == "__main__":
-    main()
+    args = parse_argv()
+    recursive_copy(args.source, args.output)
